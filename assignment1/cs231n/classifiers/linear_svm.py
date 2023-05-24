@@ -12,47 +12,38 @@ def svm_loss_naive(W, X, y, reg):
     of N examples.
 
     Inputs:
-    - W: A numpy array of shape (D, C) containing weights. -> (3072, 10)
-    - X: A numpy array of shape (N, D) containing a minibatch of data. -> (500, 3072)
-    - y: A numpy array of shape (N,) containing training labels; y[i] = c means  -> shape of y: (500,) / each training label
-    that X[i] has label c, where 0 <= c < C.
+    - W: A numpy array of shape (D, C) containing weights.
+    - X: A numpy array of shape (N, D) containing a minibatch of data.
+    - y: A numpy array of shape (N,) containing training labels; y[i] = c means
+      that X[i] has label c, where 0 <= c < C.
     - reg: (float) regularization strength
 
     Returns a tuple of:
     - loss as single float
     - gradient with respect to weights W; an array of same shape as W
     """
-    dW = np.zeros(W.shape)  # initialize the gradient as zero (3073, 10) / 3072 + 1(bias)
+    dW = np.zeros(W.shape)  # initialize the gradient as zero
 
     # compute the loss and the gradient
-    num_classes = W.shape[1] # 10 <- (3073, 10)
-    num_train = X.shape[0] # <- 500 <- (500, 3073) 
-    loss = 0.0 # initialize loss
-    for i in range(num_train): # range(500)
-        scores = X[i].dot(W) # X * W : (500, 10)
-        correct_class_score = scores[y[i]] # True labels
-        for j in range(num_classes): # range(10)
-            if j == y[i]: # j = 1,..,10 and y[i] (label이 맞는지 비교)
-                continue # 정답일 경우 그냥 pass
-            # svm loss -> (s_j - s_y + 1)
+    num_classes = W.shape[1]
+    num_train = X.shape[0]
+    loss = 0.0
+    for i in range(num_train):
+        scores = X[i].dot(W)
+        correct_class_score = scores[y[i]]
+        for j in range(num_classes):
+            if j == y[i]:
+                continue
             margin = scores[j] - correct_class_score + 1  # note delta = 1
-            if margin > 0: # margin이 0보다 크면
-                # 1) loss에 margin 값 추가
+            if margin > 0:
                 loss += margin
-                # 2) dW에 s_j를 더하고 s_y_i를 뺀다.
-                dW[:, j] += X[i]    # 모든 행(1~3073행)의 각 열, 즉 모든 행렬 값에 X[i] - update gradient for incorrect label s[j]
-                dW[:, y[i]] -= X[i] # update all gradients for correct label s[y]
-
-                # L = 1/N Σ L_i(f(x_i,W),y_i)
-                # dW = dL/dW
-                #    = 1/N*d(margin)/dW 
 
     # Right now the loss is a sum over all training examples, but we want it
     # to be an average instead so we divide by num_train.
-    loss /= num_train # 1/N
+    loss /= num_train
 
     # Add regularization to the loss.
-    loss += reg * np.sum(W * W) # Σ L_i(f(x_i,W),y_i)
+    loss += reg * np.sum(W * W)
 
     #############################################################################
     # TODO:                                                                     #
@@ -62,13 +53,12 @@ def svm_loss_naive(W, X, y, reg):
     # loss is being computed. As a result you may need to modify some of the    #
     # code above to compute the gradient.                                       #
     #############################################################################
-    
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
     # loss function의 gradient인 dW를 구하는 것 (derivative of weights)
     dW /= num_train # 1/N - scale gradient over the number of samples
     dW = dW + 2 * reg * W # append partial derivative of regularization term (use L2 norm so multiply 2)
-    
+
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
     return loss, dW
@@ -81,8 +71,8 @@ def svm_loss_vectorized(W, X, y, reg):
     Inputs and outputs are the same as svm_loss_naive.
     """
     loss = 0.0
-    dW = np.zeros(W.shape)  # initialize the gradient as zero (3073, 10)
-    
+    dW = np.zeros(W.shape)  # initialize the gradient as zero
+
     #############################################################################
     # TODO:                                                                     #
     # Implement a vectorized version of the structured SVM loss, storing the    #

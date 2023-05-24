@@ -24,7 +24,6 @@ class LinearClassifier(object):
     ):
         """
         Train this linear classifier using stochastic gradient descent.
-
         Inputs:
         - X: A numpy array of shape (N, D) containing training data; there are N
           training samples each of dimension D.
@@ -35,7 +34,6 @@ class LinearClassifier(object):
         - num_iters: (integer) number of steps to take when optimizing
         - batch_size: (integer) number of training examples to use at each step.
         - verbose: (boolean) If true, print progress during optimization.
-
         Outputs:
         A list containing the value of the loss function at each training iteration.
         """
@@ -96,11 +94,9 @@ class LinearClassifier(object):
         """
         Use the trained weights of this linear classifier to predict labels for
         data points.
-
         Inputs:
         - X: A numpy array of shape (N, D) containing training data; there are N
           training samples each of dimension D.
-
         Returns:
         - y_pred: Predicted labels for the data in X. y_pred is a 1-dimensional
           array of length N, and each element is an integer giving the predicted
@@ -124,13 +120,11 @@ class LinearClassifier(object):
         """
         Compute the loss function and its derivative.
         Subclasses will override this.
-
         Inputs:
         - X_batch: A numpy array of shape (N, D) containing a minibatch of N
           data points; each point has dimension D.
         - y_batch: A numpy array of shape (N,) containing labels for the minibatch.
         - reg: (float) regularization strength.
-
         Returns: A tuple containing:
         - loss as a single float
         - gradient with respect to self.W; an array of the same shape as W

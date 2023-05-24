@@ -252,7 +252,7 @@ class TwoLayerNet(object):
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         score = self.loss(X)
-        y_pred = np.argmax(score,axis=1)
+        y_pred = np.argmax(score, axis=1)
         pass
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
